@@ -67,6 +67,7 @@ public class PlaylistDialog extends AppCompatActivity implements AdapterView.OnI
                     null, MusicContract.PlaylistEntry._ID + "=?", new String[]{mPlaylistId}, null, null, null);
 
             if (playlistName != null) {
+                playlistName.moveToFirst();
                 mPlaylistNameText.setText(playlistName.getString(playlistName.getColumnIndexOrThrow(MusicContract.PlaylistEntry.COLUMN_NAME_NAME)));
             }
             playlistName.close();
@@ -85,6 +86,7 @@ public class PlaylistDialog extends AppCompatActivity implements AdapterView.OnI
                     mMusicData.moveToNext();
                 }
             }
+
         } else {
             mMusicData = mFacade.queryAllMusic(this);
 
@@ -112,18 +114,18 @@ public class PlaylistDialog extends AppCompatActivity implements AdapterView.OnI
         Intent serviceIntent = new Intent(this, MusicService.class);
         serviceIntent.setAction(MusicService.ACTION_CLICK_MUSIC);
         serviceIntent.putExtra("playlist", mPlaylist);
-//        serviceIntent.putExtra("position", position);
+        serviceIntent.putExtra("position", position);
         serviceIntent.putExtra("musicId", id);
         serviceIntent.putExtra("playlistId", mPlaylistId);
         startService(serviceIntent);
 
         if (mPlaylistId != null) {
             mDBAdapter.setNowMusicPosition(position);
+            mDBAdapter.notifyDataSetChanged();
         } else {
             mAdapter.setNowMusicPosition(position);
+            mAdapter.notifyDataSetChanged();
         }
-        mAdapter.notifyDataSetChanged();
-
     }
 
     @Subscribe

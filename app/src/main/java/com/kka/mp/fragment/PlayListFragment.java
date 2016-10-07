@@ -94,7 +94,6 @@ public class PlayListFragment extends Fragment implements View.OnClickListener, 
         mPlaylistName = mFacade.queryPlaylist();
 
         if (mPlaylistName != null) {
-            Toast.makeText(getActivity(), "값 있음", Toast.LENGTH_SHORT).show();
             mAdapter = new PlayListCursorAdapter(getActivity(), mPlaylistName);
             mListview.setAdapter(mAdapter);
         }

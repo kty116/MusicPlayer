@@ -91,8 +91,6 @@ public class SearchMusicFragment extends Fragment implements AdapterView.OnItemC
                 null,
                 MediaStore.Audio.Media.TITLE + " COLLATE LOCALIZED ASC");
 
-        Toast.makeText(getActivity(), "검색이벤트", Toast.LENGTH_SHORT).show();
-
         mAdapter = new AllListCursorAdapter(getActivity(), mSearchMusicData);
 
         mListview.setAdapter(mAdapter);
